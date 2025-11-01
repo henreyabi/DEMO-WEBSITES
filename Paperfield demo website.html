@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Paperfield — Designer Stationery & Art Prints (DEMO)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    /* Light Theme Variables */
+    --bg:#ffffff;
+    --card:#f8f9fa;
+    --muted:#6c757d; /* Darker muted text for contrast */
+    --accent:#ff7e5f; /* A new accent color */
+    --accent-2:#feb47b;
+    --glass: rgba(0,0,0,0.04); /* Light glass effect */
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    /* Updated background gradient */
+    background: linear-gradient(180deg,#f8f9fa 0%, #ffffff 100%);
+    color:#212529; /* Dark text color */
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+    padding:32px;
+  }
+
+  /* Container */
+  .site{
+    max-width:1200px;
+    margin:0 auto;
+  }
+
+  /* Header */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:28px;
+  }
+  .brand{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    text-decoration:none;
+    color:inherit;
+  }
+  .logo{
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:grid;
+    place-items:center;
+    box-shadow:0 6px 30px rgba(255,126,95,0.08), inset 0 -6px 30px rgba(0,0,0,0.15);
+    flex-shrink:0;
+  }
+  .logo svg{width:34px;height:34px;transform:rotate(-12deg); stroke:#ffffff}
+  .brand h1{
+    margin:0;
+    font-family:"Playfair Display",serif;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:0.2px;
+  }
+  .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+  .controls{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+
+  .search{
+    /* Light theme search box */
+    background:var(--card);
+    border:1px solid rgba(0,0,0,0.06);
+    border-radius:999px;
+    padding:8px 12px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    min-width:220px;
+    color:var(--muted);
+  }
+  .search input{
+    background:transparent;border:0;color:inherit;outline:none;font-size:14px;
+    width:100%;
+  }
+  .search svg{opacity:1;}
+
+  .cart-btn{
+    /* Light theme cart button */
+    background:var(--card);
+    border:1px solid rgba(0,0,0,0.06);
+    padding:8px 12px;border-radius:10px;color:inherit;cursor:pointer;
+    display:flex;gap:10px;align-items:center;
+  }
+  .cart-btn:hover{opacity:.8;}
+
+  /* Hero */
+  .hero{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:28px;
+    align-items:center;
+    margin-bottom:36px;
+  }
+  .hero .left{
+    /* Light theme hero background */
+    background: var(--card);
+    padding:28px;border-radius:var(--radius);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.05);
+    border:1px solid rgba(0,0,0,0.04);
+  }
+  .eyebrow{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+  .hero h2{font-family:"Playfair Display",serif;font-size:36px;margin:0 0 12px;color:#212529}
+  .hero p{margin:0;color:var(--muted);max-width:620px}
+
+  .hero .actions{margin-top:18px;display:flex;gap:12px}
+  .btn{
+    padding:12px 18px;border-radius:12px;border:0;cursor:pointer;font-weight:600;
+  }
+  .btn-primary{
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#ffffff; box-shadow: 0 6px 18px rgba(255,126,95,0.12);
+  }
+  .btn-ghost{
+    background:transparent;border:1px solid rgba(0,0,0,0.1);color:var(--muted)
+  }
+
+  /* Right showcases */
+  .showcase{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .card{
+    /* Light theme card background */
+    background:var(--card);
+    border-radius:12px;padding:12px;border:1px solid rgba(0,0,0,0.04);
+    display:flex;align-items:center;gap:12px;
+  }
+  .thumb{
+    width:72px;height:72px;border-radius:10px;flex-shrink:0;overflow:hidden;background:#e9ecef;
+    display:grid;place-items:center;
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* Filters */
+  .filters{
+    display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;
+  }
+  .chip{
+    /* Light theme chip */
+    padding:8px 12px;border-radius:999px;
+    background:var(--card);
+    border:1px solid rgba(0,0,0,0.04);
+    cursor:pointer;color:var(--muted);font-size:13px
+  }
+
+  /* Grid */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  .product{
+    /* Light theme product card */
+    background:var(--card);
+    padding:14px;border-radius:14px;border:1px solid rgba(0,0,0,0.04);
+    display:flex;flex-direction:column;gap:12px;min-height:320px;
+  }
+  .product .image{
+    height:180px;border-radius:10px;overflow:hidden;background:#e9ecef;display:grid;place-items:center;
+  }
+  .product img{width:100%;height:100%;object-fit:cover;display:block}
+  .meta{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .meta h3{margin:0;font-size:16px}
+  .meta p{margin:0;color:var(--muted);font-size:13px}
+  .price{font-weight:700}
+
+  .atc{
+    margin-top:auto;
+    display:flex;gap:8px;align-items:center;
+  }
+  /* Quantity control on product grid */
+  .qty-control{
+    display:flex;align-items:center;gap:0;border:1px solid rgba(0,0,0,0.1);border-radius:8px;overflow:hidden;
+  }
+  .qty-control span{
+    padding:8px;min-width:30px;text-align:center;font-size:14px;
+    background:var(--card);color:#212529;
+  }
+  .qty-control button{
+    background:var(--card);border:0;padding:8px 12px;cursor:pointer;font-weight:600;color:#212529;
+    user-select:none;
+  }
+  .small-atc{
+    padding:8px 12px;
+  }
+
+  /* Footer */
+  footer{
+    margin-top:48px;
+    padding-top:20px;
+    border-top:1px solid rgba(0,0,0,0.05);
+    color:var(--muted);font-size:13px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px
+  }
+  .footer-links{
+    display:flex;gap:20px;
+  }
+  .footer-links a{
+    color:inherit;text-decoration:none;
+  }
+  .footer-links a:hover{color:var(--accent);}
+
+
+  /* --- Cart Page Styles --- */
+  .cart-page{
+    padding:32px 0;
+    min-height:70vh;
+  }
+  .cart-item{
+    display:flex;
+    gap:20px;
+    padding:15px 0;
+    border-bottom:1px solid rgba(0,0,0,0.05);
+    align-items:center;
+  }
+  .cart-item-img{
+    width:80px;height:80px;border-radius:10px;overflow:hidden;flex-shrink:0;
+    background:var(--card);
+  }
+  .cart-item-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .cart-item-details{flex:1}
+  .cart-item-title{margin:0 0 4px;font-size:18px;color:#212529}
+  .cart-item-price{font-weight:700;color:var(--muted)}
+  .cart-item-actions{display:flex;align-items:center;gap:12px}
+  .qty-control-cart{display:flex;align-items:center;gap:0;border:1px solid rgba(0,0,0,0.1);border-radius:8px;overflow:hidden;}
+  .qty-control-cart button{
+    background:var(--card);border:0;padding:8px 12px;cursor:pointer;font-weight:600;color:#212529;
+    user-select:none;
+  }
+  .qty-control-cart span{padding:8px;min-width:30px;text-align:center;font-size:14px;background:var(--card);color:#212529;}
+  .cart-total{
+    margin-top:30px;
+    padding-top:20px;
+    border-top:2px solid rgba(0,0,0,0.05);
+    font-size:22px;
+    font-weight:700;
+    text-align:right;
+  }
+  .cart-total span{color:var(--accent)}
+  .checkout-btn{
+    float:right;
+    margin-top:15px;
+  }
+  .cart-empty{
+    text-align:center;
+    padding:60px 0;
+    font-size:18px;
+    color:var(--muted);
+  }
+
+  /* --- General Content Sections (About/Contact) --- */
+  .content-section{
+    padding:40px 0;
+    max-width:800px;
+    margin:0 auto;
+    min-height: 70vh;
+  }
+  .content-section h2{
+    font-family:"Playfair Display",serif;
+    font-size:32px;
+    margin-bottom:20px;
+    border-bottom:1px solid rgba(0,0,0,0.05);
+    padding-bottom:10px;
+  }
+  .contact-form label{
+    display:block;
+    margin-top:15px;
+    font-weight:600;
+    font-size:14px;
+    color:#212529;
+  }
+  .contact-form input, .contact-form textarea{
+    width:100%;
+    padding:12px;
+    margin-top:5px;
+    border:1px solid rgba(0,0,0,0.1);
+    border-radius:8px;
+    background:var(--card);
+    color:#212529;
+    font-family:inherit;
+  }
+  .contact-form textarea{
+    resize:vertical;
+    min-height:120px;
+  }
+  .contact-info{
+    margin-top:20px;
+    color:var(--muted);
+  }
+
+
+  /* small screens */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;align-items:stretch}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .cart-item{flex-wrap:wrap;}
+    .cart-item-details{flex-basis:100%;}
+    .cart-item-actions{margin-left:auto;}
+  }
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr}
+    body{padding:20px}
+    .search{min-width:120px}
+    .brand h1{font-size:18px}
+  }
+
+  /* micro interactions */
+  .chip.active{
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#ffffff;
+    border:0;
+    box-shadow:0 6px 20px rgba(255,126,95,0.07);
+  }
+  .product:hover{transform:translateY(-6px);transition:all .22s ease}
+  .btn-primary:active{transform:translateY(1px)}
+</style>
+</head>
+<body>
+  <div class="site">
+
+    <header>
+      <a class="brand" href="#home" onclick="return false">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 20v-16h7a4 4 0 010 8H3" stroke="#071017" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10 12.5A3.5 3.5 0 0013.5 9H21" stroke="#071017" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Paperfield</h1>
+          <p>Designer stationery & art prints — <span style="font-weight:700;color:var(--accent)">DEMO</span></p>
+        </div>
+      </a>
+
+      <div class="controls">
+        <div class="search" role="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input id="q" placeholder="Search prints, notebooks..." />
+        </div>
+
+        <button class="cart-btn" id="open-cart" title="Open cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6h15l-1.5 9H8.5L6 6z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="cart-count">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <div id="home-view">
+        <section class="hero" id="home-hero">
+          <div class="left">
+            <div class="eyebrow">New Collections</div>
+            <h2>Curated paper goods by independent makers</h2>
+            <p>Paperfield showcases limited edition prints, letterpress stationery, and artisan notebooks. Each item is chosen for craft, texture, and timeless design — perfect for gifting or elevating everyday workspaces.</p>
+            <div class="actions">
+              <button class="btn btn-primary" data-page="products">Explore Collections</button>
+              <button class="btn btn-ghost" data-page="about">About the Makers</button>
+            </div>
+          </div>
+
+          <aside class="showcase">
+            <div class="card">
+              <div class="thumb"><img src="https://picsum.photos/seed/art1/320/320" alt="Sample framed print"/></div>
+              <div style="flex:1">
+                <strong style="display:block">Limited Print — "Dawn Study"</strong>
+                <small style="color:var(--muted)">Edition of 50 — signed</small>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="thumb"><img src="https://picsum.photos/seed/craft2/320/320" alt="Notebooks"/></div>
+              <div style="flex:1">
+                <strong style="display:block">Handbound Notebooks</strong>
+                <small style="color:var(--muted)">Recycled paper — 120gsm</small>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section id="home-products">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <h3 style="margin:0;font-size:20px">Featured Products</h3>
+            <div style="color:var(--muted);font-size:13px;font-weight:600;color:var(--accent)">**DEMO SITE: No purchases will be processed**</div>
+          </div>
+
+          <div class="filters" id="filters">
+            <button class="chip active" data-filter="all">All</button>
+            <button class="chip" data-filter="prints">Prints</button>
+            <button class="chip" data-filter="notebooks">Notebooks</button>
+            <button class="chip" data-filter="cards">Cards</button>
+            <button class="chip" data-filter="gifts">Gifts</button>
+          </div>
+
+          <div class="grid" id="grid">
+            </div>
+        </section>
+      </div>
+      
+      <section class="content-section" id="about-page" style="display:none;">
+          <h2>About Paperfield — A Portfolio Demo</h2>
+          <p>This entire site is a **non-functional portfolio demonstration** of modern front-end design and JavaScript e-commerce logic. Paperfield is a conceptual brand dedicated to high-quality, curated paper goods from independent makers.</p>
+          <p style="margin-top:20px;font-weight:600;">Our Vision (in this Demo):</p>
+          <ul style="color:var(--muted);padding-left:20px;">
+              <li>**Curated Quality:** We imagine selecting only the best paper textures and print quality.</li>
+              <li>**Small Editions:** The concept focuses on limited runs and artisan craft, not mass production.</li>
+              <li>**Design Focus:** The site aims to be a clean, minimal, and typography-focused experience.</li>
+          </ul>
+          <p style="margin-top:30px;color:var(--accent);font-weight:700;font-size:14px;">(This content is placeholder for the design demonstration.)</p>
+      </section>
+
+      <section class="content-section" id="contact-page" style="display:none;">
+          <h2>Contact Us — Demo Interaction</h2>
+          <p>Since this is a demo, the contact form below does not actually send an email. It demonstrates form styling and validation concepts.</p>
+          
+          <form class="contact-form" onsubmit="alert('Demo: Form submitted successfully! (No email was actually sent)'); return false;">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" required placeholder="John Doe">
+              
+              <label for="email">Your Email</label>
+              <input type="email" id="email" required placeholder="you@example.com">
+
+              <label for="message">Your Message</label>
+              <textarea id="message" required placeholder="I have a question about the 'Dawn Study' print demo..."></textarea>
+              
+              <button type="submit" class="btn btn-primary" style="margin-top:20px;">Send Demo Message</button>
+          </form>
+
+          <div class="contact-info">
+              <p style="font-weight:600;margin-top:25px;">Demo Information Only:</p>
+              <p>Email: <a href="mailto:demo@paperfield.co" style="color:var(--accent);text-decoration:none;">demo@paperfield.co</a></p>
+              <p>Location: Demo Street, Web City, 90210</p>
+          </div>
+      </section>
+
+      <section class="cart-page" id="cart-page" style="display:none;">
+        <h2 style="margin-top:0;font-family:Playfair Display,serif;font-size:32px">Shopping Cart</h2>
+        <div id="cart-items-list">
+          </div>
+        <div class="cart-total" id="cart-total-display"></div>
+        <button class="btn btn-primary checkout-btn">Proceed to Checkout</button>
+      </section>
+      <footer>
+        <div class="footer-links">
+            <a href="#about" data-page="about">About</a>
+            <a href="#contact" data-page="contact">Contact Us</a>
+            <a href="#privacy">Privacy (Demo)</a>
+            <a href="#shipping">Shipping (Demo)</a>
+        </div>
+        <div style="text-align:right">
+             <div style="font-weight:700; color:#dc3545">*** THIS IS A DEMONSTRATION WEBSITE ***</div>
+             <div>© Paperfield — Portfolio Project. All content is conceptual.</div>
+        </div>
+      </footer>
+    </main>
+
+  </div>
+
+<script>
+/*
+  Paperfield demo storefront (client-only)
+  - Added multi-page routing logic for demo pages
+*/
+
+const PRODUCTS = [
+  { id: 'pf-001', title:'Dawn Study — giclée print', price:85, category:'prints', img:'https://picsum.photos/seed/pf1/800/600', subtitle:'Limited edition 9×12"', desc:'A soft study of morning light printed on archival paper. Signed and numbered.' },
+  { id: 'pf-002', title:'Studio Grid Notebook', price:24, category:'notebooks', img:'https://picsum.photos/seed/pf2/800/600', subtitle:'Handbound — 120 pages', desc:'Lay-flat binding with cream 120gsm paper. Neutral grid layout.' },
+  { id: 'pf-003', title:'Letterpress Card Set (6)', price:32, category:'cards', img:'https://picsum.photos/seed/pf3/800/600', subtitle:'Blank inside', desc:'Deep impression, thick cotton stock. Packaged with recycled envelopes.' },
+  { id: 'pf-004', title:'Eclipse Poster', price:48, category:'prints', img:'https://picsum.photos/seed/pf4/800/600', subtitle:'24×18" risograph look', desc:'Poster print with slight texture. Vibrant pigments.' },
+  { id: 'pf-005', title:'Marigold Desk Paper', price:16, category:'gifts', img:'https://picsum.photos/seed/pf5/800/600', subtitle:'Loose sheets', desc:'Deckle-edge single-sided sheets for collage and notes.' },
+  { id: 'pf-006', title:'Portrait Study II — print', price:72, category:'prints', img:'https://picsum.photos/seed/pf6/800/600', subtitle:'Archival cotton', desc:'A small edition of expressive portrait studies.' },
+  { id: 'pf-007', title:'Folio — Letter Set', price:28, category:'cards', img:'https://picsum.photos/seed/pf7/800/600', subtitle:'3 envelopes, 6 sheets', desc:'Soft laid paper with tonal envelopes.' },
+  { id: 'pf-008', title:'Mineral Notebook', price:26, category:'notebooks', img:'https://picsum.photos/seed/pf8/800/600', subtitle:'Stone-dyed cover', desc:'Small-batch dyeing and stitched binding.' }
+];
+
+let CART = {}; // id -> quantity
+let currentFilter = 'all';
+let currentQuery = '';
+
+function $sel(q) { return document.querySelector(q) }
+function $selAll(q) { return Array.from(document.querySelectorAll(q)) }
+
+function format(n){ return '$' + n.toFixed(2) }
+
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+// --- Page Routing Logic ---
+function showPage(pageId) {
+    // Hide all main content views first
+    $sel('#home-view').style.display = 'none';
+    $sel('#cart-page').style.display = 'none';
+    $sel('#about-page').style.display = 'none';
+    $sel('#contact-page').style.display = 'none';
+    $sel('.search').style.display = 'none'; // Hide search by default
+    
+    // Show the requested page and adjust header
+    if (pageId === 'home' || pageId === 'products') {
+        $sel('#home-view').style.display = 'block';
+        $sel('.search').style.display = 'flex';
+        // Scroll to products if explicitly requested
+        if (pageId === 'products') {
+            setTimeout(() => {
+                window.scrollTo({top: $sel('#home-products').offsetTop - 30, behavior:'smooth'}) 
+            }, 10);
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    } else if (pageId === 'cart') {
+        $sel('#cart-page').style.display = 'block';
+        renderCartPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (pageId === 'about') {
+        $sel('#about-page').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (pageId === 'contact') {
+        $sel('#contact-page').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+
+// --- Cart Logic ---
+function updateCart(id, change){
+  if(!PRODUCTS.find(x => x.id === id)) return;
+  if(!CART[id]) CART[id]=0;
+  CART[id] += change;
+
+  if(CART[id] <= 0){
+    delete CART[id];
+  } else {
+    // Show quick feedback for adding from grid/product
+    if(change > 0){
+      const btn = $sel(`.product .small-atc[data-id="${id}"]`);
+      if(btn){
+        btn.textContent = 'Added (+1)';
+        setTimeout(()=>{ if(btn) btn.textContent='Add' }, 900);
+      }
+    }
+  }
+
+  renderCartCount();
+  // If the user is viewing the cart, refresh it
+  if($sel('#cart-page').style.display !== 'none') {
+      renderCartPage();
+  }
+}
+
+function renderCartCount(){
+  const count = Object.values(CART).reduce((a,b)=>a+b,0);
+  $sel('#cart-count').textContent = count;
+}
+
+function renderCartPage(){
+  const list = $sel('#cart-items-list');
+  const totalDisplay = $sel('#cart-total-display');
+  list.innerHTML = '';
+  let total = 0;
+
+  if(Object.keys(CART).length === 0){
+    list.innerHTML = '<div class="cart-empty">Your cart is empty — explore our collections to add items.</div>';
+    totalDisplay.textContent = format(0);
+    $sel('.checkout-btn').style.display = 'none';
+    return;
+  }
+  $sel('.checkout-btn').style.display = 'block';
+
+  Object.keys(CART).forEach(id => {
+    const p = PRODUCTS.find(x => x.id === id);
+    const qty = CART[id];
+    const itemTotal = qty * p.price;
+    total += itemTotal;
+
+    const el = document.createElement('div');
+    el.className = 'cart-item';
+    el.innerHTML = `
+      <div class="cart-item-img"><img src="${p.img}" alt="${escapeHtml(p.title)}"/></div>
+      <div class="cart-item-details">
+        <h4 class="cart-item-title">${escapeHtml(p.title)}</h4>
+        <div class="cart-item-price">${format(p.price)}</div>
+      </div>
+      <div class="cart-item-actions">
+        <div class="qty-control-cart">
+          <button class="cart-qty-btn" data-id="${id}" data-change="-1">−</button>
+          <span>${qty}</span>
+          <button class="cart-qty-btn" data-id="${id}" data-change="1">+</button>
+        </div>
+        <button class="btn btn-ghost" data-id="${id}" data-remove="true">Remove</button>
+      </div>
+    `;
+    list.appendChild(el);
+  });
+
+  totalDisplay.innerHTML = `Total: <span>${format(total)}</span>`;
+
+  // Attach event listeners for cart quantity controls
+  $selAll('.cart-qty-btn').forEach(btn => btn.addEventListener('click', (e) => {
+    const id = e.currentTarget.dataset.id;
+    const change = parseInt(e.currentTarget.dataset.change, 10);
+    updateCart(id, change);
+  }));
+
+  $selAll('[data-remove="true"]').forEach(btn => btn.addEventListener('click', (e) => {
+    const id = e.currentTarget.dataset.id;
+    // Set change to negative of current quantity to remove all
+    updateCart(id, -CART[id]);
+  }));
+}
+
+
+// --- Product Grid Logic ---
+
+function renderGrid(filter=currentFilter, query=currentQuery){
+  currentFilter = filter;
+  currentQuery = query;
+
+  const grid = $sel('#grid');
+  grid.innerHTML = '';
+  const list = PRODUCTS.filter(p => (filter==='all'||p.category===filter) && (p.title.toLowerCase().includes(query) || p.subtitle.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)))
+  list.forEach(p => {
+    const el = document.createElement('article');
+    el.className = 'product';
+
+    const inCartQty = CART[p.id] || 0;
+    const isAdded = inCartQty > 0;
+    
+    el.innerHTML = `
+      <div class="image" data-id="${p.id}" role="button" aria-label="View ${p.title} details" onclick="alert('Demo: Viewing details for ${escapeHtml(p.title)}'); return false;">
+        <img src="${p.img}" alt="${escapeHtml(p.title)}"/>
+      </div>
+      <div class="meta">
+        <div>
+          <h3>${escapeHtml(p.title)}</h3>
+          <p>${escapeHtml(p.subtitle)}</p>
+        </div>
+        <div style="text-align:right">
+          <div class="price">${format(p.price)}</div>
+          <div style="color:var(--muted);font-size:13px">${p.category}</div>
+        </div>
+      </div>
+      <div class="atc">
+        <div class="qty-control" style="display:${isAdded ? 'flex' : 'none'}" data-id="${p.id}">
+          <button class="grid-qty-btn" data-id="${p.id}" data-change="-1">−</button>
+          <span class="grid-qty-display" data-id="${p.id}">${inCartQty}</span>
+          <button class="grid-qty-btn" data-id="${p.id}" data-change="1">+</button>
+        </div>
+        <button class="btn btn-primary small-atc" data-id="${p.id}" style="display:${isAdded ? 'none' : 'block'}">Add</button>
+      </div>
+    `;
+    grid.appendChild(el);
+  });
+
+  // Attach listeners for the quantity buttons on the grid
+  $selAll('.grid-qty-btn').forEach(btn => btn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    const id = e.currentTarget.dataset.id;
+    const change = parseInt(e.currentTarget.dataset.change, 10);
+    
+    updateCart(id, change); 
+
+    // Update the local display immediately
+    const qtyControl = $sel(`.qty-control[data-id="${id}"]`);
+    const qtyDisplay = $sel(`.grid-qty-display[data-id="${id}"]`);
+    const atcBtn = $sel(`.small-atc[data-id="${id}"]`);
+
+    if(CART[id] > 0){
+        qtyDisplay.textContent = CART[id];
+        qtyControl.style.display = 'flex';
+        atcBtn.style.display = 'none';
+    } else {
+        qtyControl.style.display = 'none';
+        atcBtn.style.display = 'block';
+    }
+  }));
+
+  // Attach listener for initial "Add" button
+  $selAll('.small-atc').forEach(btn => btn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    const id = e.currentTarget.dataset.id;
+    updateCart(id, 1);
+    
+    // Switch to quantity controls
+    const qtyControl = $sel(`.qty-control[data-id="${id}"]`);
+    const qtyDisplay = $sel(`.grid-qty-display[data-id="${id}"]`);
+    if(qtyControl && qtyDisplay) {
+        e.currentTarget.style.display = 'none';
+        qtyControl.style.display = 'flex';
+        qtyDisplay.textContent = '1';
+    }
+  }));
+}
+
+// --- General Event Listeners ---
+
+// Navigation links (using data-page attribute for routing)
+$selAll('[data-page]').forEach(link => link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const pageId = e.currentTarget.dataset.page;
+    // Special handling for home page button
+    if (pageId === 'explore-products') {
+        showPage('products');
+    } else {
+        showPage(pageId);
+    }
+}));
+$sel('.brand').addEventListener('click', (e)=>{
+  e.preventDefault();
+  showPage('home');
+});
+
+// Filters
+$selAll('.chip').forEach(ch => ch.addEventListener('click', (e)=>{
+  showPage('products'); // Ensure we are on the products view
+  $selAll('.chip').forEach(c => c.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  renderGrid(e.currentTarget.dataset.filter, currentQuery);
+}));
+
+// Search
+$sel('#q').addEventListener('input', (e)=>{
+  showPage('products'); // Ensure we are on the products view
+  const active = $sel('.chip.active').dataset.filter || 'all';
+  renderGrid(active, e.target.value.trim().toLowerCase());
+});
+
+// Cart open button
+$sel('#open-cart').addEventListener('click', ()=>{
+  showPage('cart');
+});
+
+$sel('.checkout-btn').addEventListener('click', (e)=>{ 
+  e.preventDefault();
+  alert('Demo: Proceeding to checkout for total: ' + $sel('#cart-total-display').textContent.replace('Total: ', '')); 
+});
+
+
+// Init
+renderCartCount();
+renderGrid();
+showPage('home'); // Initialize to the home page
+
+// small helper to prevent accidental navigation
+document.querySelectorAll('a:not([href="#"]):not([data-page])').forEach(a=>a.addEventListener('click', (e)=>{ 
+    if(!a.href.startsWith(window.location.origin) || a.getAttribute('onclick')) {
+        return; 
+    }
+    e.preventDefault(); 
+    alert('Demo link clicked: ' + a.href + ' (No external navigation in demo)');
+}));
+
+</script>
+</body>
+</html>
